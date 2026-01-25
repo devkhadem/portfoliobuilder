@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Trades Portfolios Builder</title>
+    <!-- Premium Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Refined Dark Theme Colors */
+            --primary: #0B1221;
+            /* Deep Navy/Black */
+            --secondary: #151F32;
+            /* Lighter Navy for Cards */
+
+            /* --- এখানেই কার্ডের প্রধান কালার --- */
+            --accent: #D4AF37;
+            /* Metallic Gold (বর্তমান) */
+            /* --------------------------------- */
+
+            --accent-glow: #F3E5AB;
+            /* Light Gold Glow */
+            --text-white: #ffffff;
+            --text-gray: #94a3b8;
+            --text-muted: #64748b;
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --nav-height: 70px;
+            --radius: 12px;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            overflow-y: scroll;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--primary);
+            /* Uniform Dark Background */
+            color: var(--text-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background: rgba(11, 18, 33, 0.85);
+            /* Glass Effect */
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--text-white);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 45px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-white);
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: transparent;
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(11, 18, 33, 0.8), rgba(11, 18, 33, 0.6)),
+                url('assets/images/landingpage.jpeg') no-repeat center center/cover;
+            background-attachment: fixed;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+            scroll-snap-align: start;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+            padding-top: var(--nav-height);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: var(--text-white);
+            margin-bottom: 20px;
+            line-height: 1.1;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 35px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.95rem;
+            color: var(--primary);
+            background: var(--accent);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background: #b3952b;
+            color: #fff;
+            color: var(--primary);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+            box-shadow: none;
+        }
+
+        /* --- Carousel Section --- */
+        .carousel-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: calc(var(--nav-height) + 20px) 0 40px;
+            scroll-snap-align: start;
+        }
+
+        .carousel-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            aspect-ratio: 16/9;
+        }
+
+        .carousel-container:hover {
+            cursor: grab;
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.6s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0.85;
+            transition: opacity 0.3s;
+        }
+
+        .carousel-slide:hover img {
+            opacity: 1;
+        }
+
+        .c-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .c-btn:hover {
+            background: var(--accent);
+            color: #000;
+            transform: translateY(-50%);
+            box-shadow: none;
+        }
+
+        .c-prev {
+            left: 20px;
+        }
+
+        .c-next {
+            right: 20px;
+        }
+
+        /* --- Packages Section (Redesigned Cards) --- */
+        .packages-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: clamp(50px, 5vw, 70px) clamp(10px, 2vw, 20px);
+            position: relative;
+            overflow: hidden;
+            scroll-snap-align: start;
+        }
+
+        /* Background glow effect */
+        .packages-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: clamp(1vh, 2vw, 3vh);
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--text-white);
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--text-gray);
+            font-size: clamp(0.85rem, 2vw, 1.1rem);
+        }
+
+        .pricing-grid {
+            display: flex;
+            justify-content: center;
+            gap: clamp(15px, 3vw, 25px);
+            align-items: stretch;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* NEW CARD DESIGN - Glassmorphism & Depth */
+        .card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            width: clamp(140px, 18vw, 210px);
+            min-width: clamp(140px, 18vw, 210px);
+            max-width: 210px;
+            flex-shrink: 0;
+            height: auto;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .card-image {
+            height: clamp(80px, 10vw, 120px);
+            min-height: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img-inner {
+            display: flex;
+            width: 200%;
+            height: 100%;
+            animation: slideCard 12s infinite alternate ease-in-out;
+        }
+
+        .card-img-inner img {
+            width: 50%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes slideCard {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+
+            2% {
+                transform: translateX(-5px);
+            }
+
+            4% {
+                transform: translateX(5px);
+            }
+
+            6% {
+                transform: translateX(-5px);
+            }
+
+            8% {
+                transform: translateX(5px);
+            }
+
+            10% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .card-body {
+            padding: clamp(8px, 1.5vw, 12px);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.3);
+        }
+
+        .card-title {
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 2px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .card-meta {
+            font-size: clamp(0.6rem, 1.2vw, 0.85rem);
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .card-price {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            font-weight: 800;
+            color: var(--text-white);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+        }
+
+        .old-price {
+            font-size: clamp(0.7rem, 1.5vw, 1rem);
+            text-decoration: line-through;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .card-desc {
+            color: var(--text-gray);
+            font-size: clamp(0.7rem, 1.3vw, 0.85rem);
+            margin-bottom: 6px;
+            flex-grow: 1;
+            line-height: 1.3;
+        }
+
+        .card-btn {
+            display: block;
+            width: 100%;
+            padding: clamp(8px, 1.5vw, 12px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-white);
+            font-weight: 600;
+            font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .card-btn:hover {
+            background: rgba(11, 18, 33, 0.8);
+            color: #fff;
+            border-color: rgba(0, 0, 0, 0.8);
+            transform: translateY(-3px);
+            box-shadow: none;
+        }
+
+        /* --- HIGHLIGHTED CARD --- */
+        .card.featured {
+            border: 1px solid var(--accent);
+            transform: scale(1.05);
+            z-index: 5;
+            background: linear-gradient(145deg, rgba(212, 175, 55, 0.05), rgba(15, 23, 42, 0.9));
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+        }
+
+        @media (max-width: 1100px) {
+            .card.featured {
+                transform: scale(1);
+            }
+        }
+
+        .card.featured .card-title {
+            color: var(--text-white);
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .card.featured .card-btn {
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            box-shadow: none;
+            animation: shake 3s infinite;
+        }
+
+        .card.featured .card-btn:hover {
+            background: #b3952b;
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: none;
+            animation: none;
+        }
+
+        /* --- Benefits Section --- */
+        .benefits-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: calc(var(--nav-height) + 20px) 0 40px;
+            background: rgba(255, 255, 255, 0.02);
+            scroll-snap-align: start;
+        }
+
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .benefits-list {
+            display: grid;
+            grid-template-rows: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .benefits-list .benefit-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .b-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .benefits-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: block;
+            object-fit: contain;
+        }
+
+        /* --- REDESIGNED CONTACT & DECISION SECTION --- */
+        .contact-decision-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: calc(var(--nav-height) + 20px) 0 40px;
+            background: linear-gradient(to bottom, #0B1221, #0f172a);
+            position: relative;
+            overflow: hidden;
+            scroll-snap-align: start;
+        }
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        /* Left Side: The "Let's Figure Out" Helper */
+        .decision-helper {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: var(--radius);
+        }
+
+        .decision-helper h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-white);
+            margin-bottom: 10px;
+        }
+
+        .decision-helper p {
+            margin-bottom: 30px;
+            color: var(--text-gray);
+        }
+
+        /* Accordion Styles */
+        .accordion-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .accordion-header {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 20px 0;
+            text-align: left;
+            color: var(--text-white);
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Manrope', sans-serif;
+            transition: color 0.3s;
+        }
+
+        .accordion-header:hover {
+            color: var(--accent);
+        }
+
+        .accordion-header i {
+            transition: transform 0.3s ease;
+            color: var(--accent);
+        }
+
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .accordion-content p {
+            padding-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .helper-cta {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .helper-cta p {
+            font-size: 0.9rem;
+            color: var(--text-white);
+            margin-bottom: 15px;
+        }
+
+        /* Right Side: The Contact Form */
+        .contact-box {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            padding: 50px;
+            border-radius: var(--radius);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .contact-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--text-white);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+            box-shadow: none;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            background: #b3952b;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: #64748b;
+            padding: 0;
+            font-size: 0.9rem;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            scroll-snap-align: start;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            color: #fff;
+            font-size: 1rem;
+            margin: 0;
+            text-align: left;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .footer-section p,
+        .footer-section ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .footer-section a:active {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            gap: 15px;
+            margin-left: 0;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: #64748b;
+            font-size: 1.2rem;
+            transition: background 0.3s, color 0.3s;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            color: #000;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+
+
+        /* New Contact Card Styles */
+        .contact-decision-section .container {
+            background-color: var(--primary);
+            border-radius: 5px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            position: relative;
+            overflow: hidden;
+            overflow: visible;
+            width: 768px;
+            max-width: 100%;
+            min-height: 480px;
+        }
+
+        .form-container {
+            display: flex;
+            min-height: 480px;
+        }
+
+        .left-container {
+            flex: 1;
+            height: 480px;
+            min-height: 480px;
+            background-color: var(--accent);
+        }
+
+        .right-container {
+            display: flex;
+            flex: 1;
+            height: 480px;
+            min-height: 480px;
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
+            justify-content: center;
+            align-items: center;
+        }
+
+        .left-container {
+            display: flex;
+            flex: 1;
+            height: 480px;
+            min-height: 480px;
+            height: auto;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary);
+        }
+
+        .left-container p {
+            font-size: 0.9rem;
+        }
+
+        .right-inner-container {
+            width: 85%;
+            height: 100%;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .left-inner-container {
+            height: 50%;
+            width: 80%;
+            text-align: center;
+            line-height: 22px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left-inner-container h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .right-inner-container input,
+        .right-inner-container textarea {
+            width: 100%;
+            padding: 10px 15px;
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .right-inner-container input:focus,
+        .right-inner-container textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), inset 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .right-inner-container input::placeholder,
+        .right-inner-container textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .right-inner-container button {
+            width: 100%;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            box-shadow: none;
+            margin-top: 5px;
+            max-width: 100%;
+        }
+
+        .right-inner-container button:hover {
+            transform: translateY(-3px);
+            background: #b3952b;
+            color: #fff;
+            color: var(--primary);
+        }
+
+        .social-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .social {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            transition: background 0.3s, color 0.3s;
+            text-decoration: none;
+        }
+
+        .social:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .lg-view {
+            display: block;
+        }
+
+        .sm-view {
+            display: none;
+        }
+
+        form p {
+            text-align: left;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .benefit-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .decision-helper {
+                order: 2;
+            }
+
+            .contact-box {
+                order: 1;
+                margin-bottom: 40px;
+            }
+        }
+
+        @media (orientation: landscape) and (max-width: 992px) {
+            .pricing-grid {
+                display: grid;
+                grid-template-areas: "advance advance" "essentials premium";
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .card {
+                min-height: 400px;
+                width: auto;
+                max-width: 300px;
+            }
+
+            .card:nth-child(1) {
+                grid-area: essentials;
+                justify-self: center;
+            }
+
+            .card:nth-child(2) {
+                grid-area: advance;
+                justify-self: center;
+            }
+
+            .card:nth-child(3) {
+                grid-area: premium;
+                justify-self: center;
+            }
+        }
+
+        @media (max-width: 1200px) {
+
+            .packages-section {
+                padding: calc(var(--nav-height) + 50px) 20px 60px;
+            }
+
+            .section-header h2 {
+                font-size: clamp(1.8rem, 5vw, 2.5rem);
+            }
+
+            .nav-links {
+
+                position: fixed;
+
+                top: 0;
+
+                right: -100%;
+
+                width: 80%;
+
+                height: 100vh;
+
+                background: var(--primary);
+
+                flex-direction: column;
+
+                justify-content: center;
+
+                align-items: center;
+
+                transition: 0.4s;
+
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+
+            }
+
+
+
+            .nav-links.active {
+
+                right: 0;
+
+            }
+
+
+
+            .hamburger {
+
+                display: block;
+
+                z-index: 1001;
+
+            }
+
+            .pricing-grid {
+
+                flex-direction: column;
+
+                align-items: center;
+
+                flex-direction: row;
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding-bottom: 20px;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                gap: 20px;
+                padding-left: 5vw;
+                padding-right: 5vw;
+                max-width: 100%;
+                margin: 0 auto;
+
+            }
+
+
+
+            .card {
+                min-width: 250px;
+                width: 70vw;
+                max-width: 280px;
+                scroll-snap-align: center;
+                margin-right: 10px;
+            }
+
+
+
+            .card.featured {
+
+                transform: scale(1);
+
+            }
+
+            .hero {
+                background-attachment: scroll;
+            }
+
+
+
+            .hero h1 {
+
+                font-size: 1.4rem;
+
+            }
+
+
+
+            .section-header h2 {
+                font-size: clamp(1.2rem, 6vw, 2.2rem);
+            }
+
+            .benefit-grid h2,
+            .contact-section h2 {
+                font-size: clamp(1.2rem, 6vw, 2.2rem);
+            }
+
+
+
+            .benefits-image {
+
+                width: 100%;
+
+                max-width: 400px;
+
+                height: auto;
+
+                border-radius: 12px;
+
+                border: 1px solid rgba(255, 255, 255, 0.1);
+
+                margin: 0 auto;
+
+                display: block;
+
+                object-fit: contain;
+
+            }
+
+
+
+            .footer-content {
+
+                text-align: center;
+
+            }
+
+
+
+            .footer-section {
+
+                align-items: center;
+
+            }
+
+
+
+            .footer-section h3 {
+
+                text-align: center;
+
+            }
+
+
+
+            .social-links {
+
+                justify-content: center;
+
+            }
+
+        }
+
+        @media (max-width: 768px) {
+            .carousel-section {
+                height: auto;
+                min-height: auto;
+                padding: calc(var(--nav-height) + 20px) 15px 30px;
+            }
+
+            .carousel-container {
+                aspect-ratio: 4/3;
+                max-height: 400px;
+            }
+
+            .carousel-slide img {
+                object-fit: cover;
+            }
+
+            .card-image {
+                height: 200px;
+                min-height: 200px;
+            }
+
+            .card-title {
+                font-size: 1.6rem;
+            }
+
+            .card-price {
+                font-size: 2rem;
+            }
+
+            .card-desc {
+                font-size: 1rem;
+                margin-bottom: 15px;
+            }
+
+            .card-btn {
+                font-size: 1.1rem;
+            }
+
+            .card-btn {
+                font-size: 1.1rem;
+            }
+
+            .benefits-section {
+                height: auto;
+                padding: calc(var(--nav-height) + 20px) 20px 40px;
+            }
+
+            .benefit-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                width: 100%;
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .benefits-list {
+                display: grid;
+                gap: 20px;
+                grid-auto-rows: 1fr;
+            }
+
+            .benefit-item {
+                
+            }
+
+            .benefits-image {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .packages-section {
+                padding: 100px 20px 60px;
+                height: auto;
+                justify-content: flex-start;
+                min-height: auto;
+            }
+
+            .section-header {
+                margin-bottom: 3vh;
+            }
+
+            .section-header h2 {
+                font-size: clamp(1.3rem, 5vw, 1.8rem);
+            }
+
+            .section-header p {
+                font-size: 0.9rem;
+            }
+
+            .pricing-grid {
+                flex-direction: column;
+                overflow-x: visible;
+                padding: 0;
+                gap: 12px;
+                max-width: 100%;
+            }
+
+            .card {
+                min-width: unset;
+                width: 100%;
+                max-width: 400px;
+                min-height: auto;
+                margin: 0 auto 25px;
+            }
+
+            .left-container {
+                display: none;
+            }
+
+            .sm-view {
+                display: block;
+                color: var(--text-white);
+            }
+        }
+
+        /* --- Mobile Contact Section Integration --- */
+        .mobile-contact-view {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .desktop-contact-view {
+                display: none;
+            }
+
+            .mobile-contact-view {
+                display: block !important;
+            }
+
+            /* Override the specific container styles from .contact-decision-section .container */
+            .contact-decision-section .container.mobile-contact-view {
+                background-color: transparent;
+                box-shadow: none;
+                width: 90%;
+                max-width: 1200px;
+                min-height: auto;
+                overflow: visible;
+                padding: 0;
+            }
+
+            .contact-decision-section {
+                padding: 100px 20px 60px;
+                height: auto;
+                min-height: auto;
+                overflow: visible;
+            }
+        }
+
+        /* Styles from indexmodel.html adapted for mobile view */
+        .mobile-contact-view .contact-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 700;
+            color: var(--text-white);
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        .mobile-contact-view .contact-box {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .mobile-contact-view .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .mobile-contact-view .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        .mobile-contact-view .form-input {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .mobile-contact-view .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), inset 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .mobile-contact-view .submit-btn {
+            width: 100%;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            box-shadow: none;
+            margin-top: 10px;
+        }
+
+        .mobile-contact-view .submit-btn:hover {
+            transform: translateY(-3px);
+            background: #fff;
+            background: #b3952b;
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-inner">
+            <a href="#" class="logo"><img src="assets/images/logo.png" alt="Logo"> Portfolio<span>Builder</span></a>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Craft Your Professional Identity</h1>
+            <p>Showcase your trades skills with a portfolio built from real jobsite work. Get noticed, hired, and paid
+                better</p>
+            <a href="#packages" class="btn">Choose Your Package</a>
+        </div>
+    </section>
+
+    <!-- Modern Carousel Section -->
+    <div class="container carousel-section">
+        <div class="carousel-container">
+            <button class="c-btn c-prev">&#10094;</button>
+            <div class="carousel-track">
+                <div class="carousel-slide"><img src="assets/images/slider/SlideShow_page-0001.jpg" alt="Slide 1"></div>
+                <div class="carousel-slide"><img src="assets/images/slider/SlideShow_page-0002.jpg" alt="Slide 2"></div>
+                <div class="carousel-slide"><img src="assets/images/slider/SlideShow_page-0003.jpg" alt="Slide 3"></div>
+                <div class="carousel-slide"><img src="assets/images/slider/SlideShow_page-0004.jpg" alt="Slide 4"></div>
+                <div class="carousel-slide"><img src="assets/images/slider/SlideShow_page-0005.jpg" alt="Slide 5"></div>
+                <div class="carousel-slide"><img src="assets/images/slider/SlideShow_page-0006.jpg" alt="Slide 6"></div>
+                <div class="carousel-slide"><img src="assets/images/slider/SlideShow_page-0007.jpg" alt="Slide 7"></div>
+                <div class="carousel-slide"><img src="assets/images/slider/SlideShow_page-0008.jpg" alt="Slide 8"></div>
+                <div class="carousel-slide"><img src="assets/images/slider/SlideShow_page-0009.jpg" alt="Slide 9"></div>
+            </div>
+            <button class="c-btn c-next">&#10095;</button>
+        </div>
+    </div>
+
+    <!-- Packages Section -->
+    <section id="packages" class="packages-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Choose Your Package</h2>
+                <p>Tailored solutions for every stage of your career</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Essentials -->
+                <div class="card">
+                    <div class="card-image">
+                        <div class="card-img-inner">
+                            <img src="assets/images/service/Servicepageessentials.jpg" alt="Essentials">
+                            <img src="assets/images/servicecard/Servicepageesstial.jpg" alt="Ex">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Essential</h3>
+                        <div class="card-meta">2 Projects, 14 Photos</div>
+                        <div class="card-price"><span class="old-price">$149</span> $99</div>
+                        <p class="card-desc">Ideal for apprentices or workers with limited experience. Clean layout with
+                            key project highlights.</p>
+                        <a href="https://buy.stripe.com/test_aFa4gzcn34lUgIt8UEgbm00" class="card-btn"
+                            target="_blank">Build My
+                            Portfolio</a>
+                    </div>
+                </div>
+
+                <!-- Advance (Highlighted) -->
+                <div class="card featured">
+                    <div class="popular-tag">Most Popular</div>
+                    <div class="card-image">
+                        <div class="card-img-inner">
+                            <img src="assets/images/service/ServicepageADVANCED.jpg" alt="Advanced">
+                            <img src="assets/images/servicecard/ServicePageadvaced.jpg" alt="Ex">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Advance</h3>
+                        <div class="card-meta">4 Projects, 20 Photos</div>
+                        <div class="card-price"><span class="old-price">$199</span> $159</div>
+                        <p class="card-desc">Tradespeople with multiple projects. More photos, stronger storytelling,
+                            and detailed presentation.</p>
+                        <a href="https://buy.stripe.com/test_4gM28rfzfg4Ccsd2wggbm01" class="card-btn"
+                            target="_blank">Build My Portfolio</a>
+                    </div>
+                </div>
+
+                <!-- Premium -->
+                <div class="card">
+                    <div class="card-image">
+                        <div class="card-img-inner">
+                            <img src="assets/images/service/ServicepagePREMIUM.jpg" alt="Premium">
+                            <img src="assets/images/servicecard/Servicepagepreimium.jpg" alt="Ex">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Premium</h3>
+                        <div class="card-meta">6 Projects, 30 Photos</div>
+                        <div class="card-price"><span class="old-price">$299</span> $249</div>
+                        <p class="card-desc">Built for seasoned tradespeople. Full project coverage, cleaner layout, and
+                            a polished presentation.</p>
+                        <a href="https://buy.stripe.com/test_8x27sLgDj6u277Tfj2gbm02" class="card-btn"
+                            target="_blank">Build My Portfolio</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits-section">
+        <div class="container benefit-grid">
+            <div>
+                <img src="assets/images/whychooseus.png" alt="Why Choose Us" class="benefits-image">
+            </div>
+            <div class="benefits-list">
+                <h2 style="font-family: 'Playfair Display'; color: #fff; margin-bottom: 30px;">What
+                    This Portfolio Does For You?</h2>
+                <div class="benefit-item">
+                    <div class="b-icon">★</div>
+                    <div>
+                        <h4 style="color: #fff; margin-bottom: 5px;">Stand Out</h4>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">Employers see your actual projects, not just job
+                            titles on a resume.</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="b-icon">$</div>
+                    <div>
+                        <h4 style="color: #fff; margin-bottom: 5px;">Get better pay</h4>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">A clear portfolio makes it easier to back up your
+                            experience with proof when asking for a raise.</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="b-icon">✓</div>
+                    <div>
+                        <h4 style="color: #fff; margin-bottom: 5px;">Professional Presentation</h4>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">Turns scattered job site photos into a clean,
+                            organized, and professional showcase.</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="b-icon">↻</div>
+                    <div>
+                        <h4 style="color: #fff; margin-bottom: 5px;">Reliability & Consistency</h4>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">Shows your progression and how you work from start
+                            to finish.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMPROVED: Decision & Contact Section -->
+    <section id="contact" class="contact-decision-section">
+        <div class="container desktop-contact-view">
+            <div class="form-container">
+                <div class="left-container">
+                    <div class="left-inner-container">
+                        <h2>Not sure which package fits you? Let's figure out together.</h2>
+                        <!-- <p>Not sure which package fits you? Let's figure out together.</p> -->
+                        <p>Feel free to send me a message in the contact form</p>
+                    </div>
+                </div>
+                <div class="right-container">
+                    <div class="right-inner-container">
+                        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contactForm">
+                            <h2 class="sm-view" style="font-size: 1.6rem; margin-bottom: 1rem;">Not sure which package
+                                fits you? Let's figure out together.</h2>
+                            <input type="text" name="name" placeholder="Name *" required />
+                            <input type="email" name="email" placeholder="Email *" required />
+                            <input type="text" name="company" placeholder="Company" />
+                            <input type="tel" name="phone" placeholder="Phone *" required />
+                            <textarea name="message" rows="4"
+                                placeholder="Describe your trade specialty and experience level" required></textarea>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Contact View (from indexmodel.html) -->
+        <div class="container mobile-contact-view">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 class="contact-heading">Not sure which package fits you? Let's figure out together.</h2>
+            </div>
+            <div class="contact-box">
+                <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="mobileContactForm">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" name="name" class="form-input" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-input" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" name="phone" class="form-input" placeholder="Your Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea name="message" rows="3" class="form-input"
+                            placeholder="Describe your trade specialty and experience level" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About PortfolioBuilder</h3>
+                    <p>We help tradespeople create professional portfolios from their real jobsite work. Showcase your
+                        skills, get noticed, and command higher rates.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#packages">Essentials Package</a></li>
+                        <li><a href="#packages">Advance Package</a></li>
+                        <li><a href="#packages">Premium Package</a></li>
+                        <!-- <li><a href="#contact">Custom Solutions</a></li> -->
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Email: info@portfoliobuilder.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                    <p>Address: 123 Trade Street, City, State 12345</p>
+                </div>
+                <div class="footer-section">
+                    <h3>&nbsp;Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PortfolioBuilder. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Mobile Form Submit Logic
+        const mobileForm = document.getElementById('mobileContactForm');
+        if (mobileForm) {
+            mobileForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = mobileForm.querySelector('button');
+                const origText = btn.innerText;
+                btn.innerText = 'Sending...';
+                btn.disabled = true;
+
+                try {
+                    const res = await fetch(mobileForm.action, {
+                        method: 'POST',
+                        body: new FormData(mobileForm),
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (res.ok) {
+                        btn.innerText = 'Sent!';
+                        btn.style.background = '#4CAF50';
+                        mobileForm.reset();
+                        setTimeout(() => {
+                            btn.innerText = origText;
+                            btn.style.background = '';
+                        }, 3000);
+                    }
+                } catch (err) {
+                    btn.innerText = 'Error';
+                }
+                btn.disabled = false;
+            });
+        }
+    </script>
+</body>
+
+</html>
